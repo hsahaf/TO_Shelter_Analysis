@@ -1,16 +1,83 @@
 ---
-title: "Analysis of Toronto Homeless Shelter"
+title: "Analysis of Toronto Homeless Shelter System"
 subtitle: "My subtitle if needed"
-author: 
-  - First author
-  - Another author
-thanks: "Code and data are available at: LINK."
+author: "Huda Sahaf"
+thanks: "Code and data are available at: https://open.toronto.ca/catalogue/."
 date: "`r Sys.time()`"
 date-format: "D MMMM YYYY"
 abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
 format: pdf
 bibliography: references.bib
 ---
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(dplyr)
+library(ggplot2)
+library(opendatatoronto)
+```
+
+```{r}
+###Read in Data####
+raw_shelter_data<-
+  read_csv(
+    file = 
+      "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/ac77f532-f18b-427c-905c-4ae87ce69c93/resource/237d5eff-ba47-46c4-8717-a92a802abdf7/download/toronto-shelter-system-flow.csv",
+    show_col_types = FALSE
+  )
+write_csv(
+  x = raw_shelter_data,
+  file = "to_shelter_system.csv"
+)
+head(raw_shelter_data)
+tail(raw_shelter_data)
+```
+
+```{r}
+####Basic Cleaning ###
+raw_shelter_data<-
+  read_csv(
+    file = "to_shelter_system.csv",
+    show_col_types = FALSE
+  )
+# Make the names easier to type
+cleaned_shelter_data <-
+  clean_names(raw_shelter_data)
+
+# Have a look at the first six rows
+head(cleaned_shelter_data)
+```
+
+```{r}
+#### Renaming the columns ####
+names(cleaned_shelter_data)
+
+cleaned_shelter_data<-
+  cleaned_shelter_data |>
+  rename(
+    dates = date_mmm_yy,
+    group_percentage = population_group_percentage,
+    trans_nb_twospirit = gender_transgender_non_binary_or_two_spirit,
+    male = gender_male,
+    female = gender_female,
+    over65 = age65over,
+    under16 = ageunder16
+  )
+head(cleaned_shelter_data)
+```
+
+```{r}
+#### Simplifying the Dates: #### 
+cleaned_shelter_data <-
+  cleaned_shelter_data |>
+  separate(
+    col = dates,
+    into = c("Month", "Year"),
+    sep = "-"
+  )
+head(cleaned_shelter_data)
+```
 
 ```{r}
 #| include: FALSE
@@ -82,6 +149,9 @@ Here's a dumb example of how to use some references: In paper we run our analysi
 
 We can use maths by including latex between dollar signs, for instance $\theta$.
 
+```{r}
+?tibble
+```
 
 # Results
 
