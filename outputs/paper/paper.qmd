@@ -15,10 +15,12 @@ library(tidyverse)
 library(janitor)
 library(dplyr)
 library(ggplot2)
+library(kableExtra)
 library(opendatatoronto)
 ```
 
 ```{r}
+#| echo: false
 ###Read in Data####
 raw_shelter_data<-
   read_csv(
@@ -35,6 +37,7 @@ tail(raw_shelter_data)
 ```
 
 ```{r}
+#| echo: false
 ####Basic Cleaning ###
 raw_shelter_data<-
   read_csv(
@@ -78,6 +81,38 @@ cleaned_shelter_data <-
   )
 head(cleaned_shelter_data)
 ```
+
+```{r}
+#### 2018: Average Number of Actively Homeless in Each Group ####
+cleaned_shelter_data|>
+  select(population_group, Year, Month, actively_homeless)|>
+  filter(!population_group == "All Population")|>
+  filter(Year == "18")|>
+  group_by(population_group)|>
+  summarise(mean = mean(actively_homeless))
+
+```
+
+```{r}
+#### 2020: Average Number of Actively Homeless in Each Group ####
+cleaned_shelter_data|>
+  select(population_group, Year, Month, actively_homeless)|>
+  filter(!population_group == "All Population")|>
+  filter(Year == "20")|>
+  group_by(population_group)|>
+  summarise(mean = mean(actively_homeless))
+```
+
+```{r}
+#### 2022: Average Number of Actively Homeless in Each Group ####
+cleaned_shelter_data|>
+  select(population_group, Year, Month, actively_homeless)|>
+  filter(!population_group == "All Population")|>
+  filter(Year == "22")|>
+  group_by(population_group)|>
+  summarise(mean = mean(actively_homeless))
+```
+
 
 ```{r}
 #| include: FALSE
