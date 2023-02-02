@@ -1,8 +1,8 @@
 ---
-title: "Analysis of Toronto Homeless Shelter System"
-subtitle: "My subtitle if needed"
+title: "Analysis of Toronto Homeless Shelter System:"
+subtitle: "A closer look at hidden homelessness"
 author: "Huda Sahaf"
-thanks: "Code and data are available at: https://open.toronto.ca/catalogue/."
+thanks: "Code and data are available at:" 
 date: "`r Sys.time()`"
 date-format: "D MMMM YYYY"
 abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
@@ -10,17 +10,79 @@ format: pdf
 bibliography: references.bib
 ---
 
+# Introduction
+
+For people experiencing homelessness in the city of Toronto, there are several options for help, most of which are funded by the government. These services are of many different types: homeless shelters, drop-in programs to access the necessities, 24-hour respites, warming spaces, and programs to get help with housing.Despite these programs, in 2021, there were 18,096 people who were experiencing homelessness in Toronto [@homie]. Homelessness is a serious problem, and unfortunately homeless shelters as well as most of the services that are offered by the city of Toronto are not a sustainable solution. The causes for homelessness are many and these service options do not address them.
+
+These services are made up of a network of 53 sites that offer services that are approved by the city of Toronto[@numsites]. Some of these sites are run and managed by the city itself, and others are community sites that are provided for by the city. Shelters offer a possible referral to other community services based on need, counselors to help find permanent housing, and mental and physical health support services. 24-hour respite sites are also similar in that they also offer referrals for other services based on the need of the individual.
+
+ But every single one of the services and sites in the network must meet the Shelter and Respite Site Standards set by the government of Toronto. The use of the homeless help services are monitored by the government of Toronto using the Shelter Management Information System (SMIS).
+ 
+ The Shelter Management Information System is meant to streamline the process of finding information about shelters in the city of Toronto. It is required for all shelter staff to be trained in the use of SMIS[@smis]. Through SMIS, the city of Toronto is able to regularly monitor the conditions of the shelters, whether it be the number of available beds in a shelter or finding the number of newly identified homeless individuals in the last month across the network of shelters in the city. All information that is entered by an individual shelter or respite site is made available on the City of Toronto servers and must meet the requirements of the city.
+ 
+ To conduct the analysis on the city of Toronto’s homeless shelter system data, R [@citeR] will be used. The data set itself was downloaded from `opendatatoronto` [@odt]. The packages `tidyverse` [@tidyv], `dplyr` [@dan], and `janitor` [@janice] will be used to read in, clean and manipulate the data. Any graphs and tables displayed were created using `ggplot2` [@greg], `knitr` [@nat], `kableExtra` [@konrad], and coloring options were made possible using the `RColorBrewer` [@ryan] package.
+ 
+# Data
+
+The primary data set used to conduct the analysis was found on opendatatoronto [@odt].  There are some shelters and respite sites that operate isolated from the city of Toronto and others that have not yet begun using the Shelter Management Information System, and therefore these two categories of homelessness help services are not included in this data set. There are many categories of information available within it. The data is broken down into group demographics and there is data on each group, spanning backwards to the last five years. These groups include the following: 
+
+**All populations**: This is a summative category, referring to the total of the following five categories
+
+**Chronic:** This category refers to people who are experiencing chronic homelessness. More specifically, chronic homelessness is defined as someone who has been reported to have 180 overnight stays in any or multiple of the homeless service facilities in the last year, or, in the past five years, the person has a total number of reported stays of 546 nights.
+
+**Families:** These are reported individuals who are staying at overnight facilities appointed by their families
+
+**Youth:** Unaccompanied youth who are between the ages of 16-24.
+
+**Single Adult:** Individuals who do not fall in either families or in youth
+
+**Refugees:** People who identify as a refugees upon entry into a homeless help facility or those who complete a homeless help program designated for refugees.
+
+**Non-Refugees:** People who do not fall in the refugee category.
+
+**Indigenous:** A person who identifies as First Nations, Metis, or Inuit.
+
+Alongside these population groups there are also categories of situational data within this dataset. 
+
+**Actively Homeless:** These are people who have made use of the shelter system at least once in the past three months and did not end up moving to permanent housing. 
+
+**Became Inactive:** People who were reported to have been using the shelter system but have not been documented using the system consistently for a period of at least three months.
+
+**Moved to Housing:** Individuals who were reported to have found and moved to permanent housing
+
+**Newly Identified:** People who were documented for use of the shelter system for the very first time.
+
+**Returned to Shelter:** Individuals who became inactive from using the homeless shelter system in Toronto and are reported to have recently returned.  
+
+**Returned from Housing:** People who were reported to have found and moved to permanent housing options but have now come back to use at least one of the overnight services within the system. 
+
+There are also age breakdowns, gender demographics and population percentage available within this data set.
+
+# Discussion
+
+The purpose of the data is to provide a holistic view of the homeless shelter system in the city of Toronto. This data set specifically documents the flow of people in the homeless shelter system due to the fact that people are constantly coming in and out of the system. There are many different types of services, and as such SMIS reflects the entry and exit of an individual in the system on a monthly basis. 
+
+According to the city of Toronto, this data is used to help measure progress towards one of the goals of the government: to make sure that homelessness in this city becomes “rare, brief, and non-recurring [@rare].” There are also different types of services that individuals often move between, which is why the numbers in the Shelter Management Information System data are reported to be higher.
+
+In order to gain a better understanding of the newly identified homeless individuals per population group, the all-populations category was filtered out of the data set, so that the total would not skew the distribution. (@fig-new_id_20) shows the mean number of newly identified homeless people based on population group in 2020. (@fig-new_id_22) is a graph representative of the mean number of newly identified homeless people based on population group in 2022. As represented on both graphs, all population groups have not changed drastically across both years. The non-refugees category in both graphs remain highest in terms of the number of newly identified homeless people. 
+ 
+
 ```{r}
+#| echo: false
+#| include: false
 library(tidyverse)
 library(janitor)
 library(dplyr)
 library(ggplot2)
 library(kableExtra)
 library(opendatatoronto)
+library(knitr)
+library(RColorBrewer)
 ```
 
 ```{r}
 #| echo: false
+#| include: false
 ###Read in Data####
 raw_shelter_data<-
   read_csv(
@@ -38,6 +100,7 @@ tail(raw_shelter_data)
 
 ```{r}
 #| echo: false
+#| include: false
 ####Basic Cleaning ###
 raw_shelter_data<-
   read_csv(
@@ -53,6 +116,8 @@ head(cleaned_shelter_data)
 ```
 
 ```{r}
+#| echo: false
+#| include: false
 #### Renaming the columns ####
 names(cleaned_shelter_data)
 
@@ -71,6 +136,8 @@ head(cleaned_shelter_data)
 ```
 
 ```{r}
+#| echo: false
+#| include: false
 #### Simplifying the Dates: #### 
 cleaned_shelter_data <-
   cleaned_shelter_data |>
@@ -83,140 +150,171 @@ head(cleaned_shelter_data)
 ```
 
 ```{r}
-#### 2018: Average Number of Actively Homeless in Each Group ####
-cleaned_shelter_data|>
-  select(population_group, Year, Month, actively_homeless)|>
-  filter(!population_group == "All Population")|>
-  filter(Year == "18")|>
-  group_by(population_group)|>
-  summarise(mean = mean(actively_homeless))
-
-```
-
-```{r}
-#### 2020: Average Number of Actively Homeless in Each Group ####
-cleaned_shelter_data|>
-  select(population_group, Year, Month, actively_homeless)|>
-  filter(!population_group == "All Population")|>
-  filter(Year == "20")|>
-  group_by(population_group)|>
-  summarise(mean = mean(actively_homeless))
-```
-
-```{r}
-#### 2022: Average Number of Actively Homeless in Each Group ####
-cleaned_shelter_data|>
-  select(population_group, Year, Month, actively_homeless)|>
-  filter(!population_group == "All Population")|>
-  filter(Year == "22")|>
-  group_by(population_group)|>
-  summarise(mean = mean(actively_homeless))
-```
-
-
-```{r}
-#| include: FALSE
-
-knitr::opts_chunk$set(echo = TRUE)
-
-library(tidyverse)
-library(palmerpenguins)
-```
-
-
-# Introduction
-
-You can and should cross-reference sections and sub-sections. For instance, Section \@ref(data). Quarto automatically makes the sections lower case and adds a dash to spaces to generate labels, for instance, Section \@ref(first-discussion-point). 
-
-
-
-# Data
-
-Our data is of penguins (@fig-bills).
-
-```{r}
-#| label: fig-bills
-#| fig-cap: Bills of penguins
 #| echo: false
-
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = "none") +
-  theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
+#| include: false
+# Naming the year column correctly
+cleaned_shelter_data <- cleaned_shelter_data |>
+mutate(
+  Year = 
+    recode(
+      Year, 
+      "18" = "2018",
+      "19" = "2019",
+      "20" = "2020",
+      "21" = "2021",
+      "22" = "2022"
+    )
+)
 ```
 
-Talk more about it.
+```{r}
+#| echo: false
+#| include: false
+#### Newly Identified: ####
+#### 2018: Average Number of Newly Identified in Each Group ####
+newly_identified_18 <- cleaned_shelter_data|>
+  select(population_group, Year, Month, newly_identified)|>
+  filter(!population_group == "All Population")|>
+  filter(Year == "2018")|>
+  group_by(population_group)|>
+  summarise(average_18 = mean(newly_identified))
 
-Also bills and their average (@fig-billssssss). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work.)
+```
 
 ```{r}
-#| label: fig-billssssss
-#| fig-cap: More bills of penguins
 #| echo: false
+#| include: false
+#### Newly Identified: ####
+#### 2020: Average Number of Newly Identified in Each Group ####
+newly_identified_20 <- cleaned_shelter_data|>
+  select(population_group, Year, Month, newly_identified)|>
+  filter(!population_group == "All Population")|>
+  filter(Year == "2020")|>
+  group_by(population_group)|>
+  summarise(average_20 = mean(newly_identified))
+```
+
+```{r}
+#| echo: false
+#| include: false
+#### Newly Identified: ####
+#### 2022: Average Number of Newly Identified in Each Group ####
+newly_identified_22 <- cleaned_shelter_data|>
+  select(population_group, Year, Month, newly_identified)|>
+  filter(!population_group == "All Population")|>
+  filter(Year == "2022")|>
+  group_by(population_group)|>
+  summarise(average_22 = mean(newly_identified))
+```
+
+```{r}
+all_newly_id <- 
+  all_newly_id |>
+  left_join(newly_identified_18)
+```
+
+```{r}
+#| echo: false
+#| label: fig-new_id_20
+#| fig-cap: Newly Identified Homeless People 2020
+#### Actively Homeless: ####
+# Creating a Graph 2020:
+ggplot(newly_identified_20, mapping = aes(x = population_group, y = average_20, fill = population_group)) +
+  scale_y_continuous(breaks=seq(0, 500, 50)) +
+  theme_light() +
+  geom_bar(stat = "identity") + 
+labs(
+  x = "Population Group",
+  y = "Number of Newly Identified Homeless Individuals"
+  )+
+  scale_fill_brewer("Set3")+
+  theme(legend.position = "none")
+
+```
+
+```{r}
+#| echo: false
+#| label: fig-new_id_22
+#| fig-cap: Newly Identified Homeless People 2022
+
+#### Newly Identified: ####
+# Creating a Graph 2022:
+
+ggplot(newly_identified_22, mapping = aes(x = population_group, y = average_22, fill = population_group)) +
+  scale_y_continuous(breaks=seq(0, 500, 50)) +
+  theme_light() +
+  geom_bar(stat = "identity") + 
+labs(
+  x = "Population Group",
+  y = "Number of Newly Identified Homeless Individuals"
+  )+
+  scale_fill_brewer("Set3") +
+  theme(legend.position = "none")
+```
+
+```{r}
+#| echo: false
+#| include: false
+#| label: active_homeless_22
+#| fig-cap: Actively Homeless People 2022
+cleaned_shelter_data|>
+  select(population_group, Year, Month, actively_homeless)|>
+  filter(population_group == "All Population")|>
+  group_by(Year)|>
+  ggplot(mapping = aes(x = Month, y = actively_homeless, fill = Year, label = actively_homeless)) + 
+  geom_bar(stat = "identity") +
+  theme_light() +
+  geom_text(size = 2, position = position_stack(vjust = 0.6)) +
+  labs(
+    title = "Number of Actively Homeless Individuals by Month",
+    x = "Month",
+    y = "Number of Actively Homeless"
+  )
+```
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+#| tbl-cap: "wow bro."
+#| label: tbl-testing 
 #| fig-width: 8
 #| fig-height: 4
-
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = FALSE) +
-  theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
+#Actively Homeless Table
+cleaned_shelter_data|>
+  select(population_group, Year, actively_homeless)|>
+  filter(population_group == "All Population")|>
+  group_by(Year)|>
+  summarise(average = mean(actively_homeless))|>
+  knitr::kable()
 ```
 
-Talk way more about it. 
 
 
 
-# Model
+What is interesting about the non-refugees population group is that it is situationally the most general of the categories defined by the city of Toronto. Yet it points to a systemic failure, an insecurity in living accommodations that results in more and more people needing the homeless shelter system over time. This is a common but worrisome phenomenon in the city of Toronto. The Canadian Observatory on Homelessness (COH) defines hidden homelessness as a type of situational homeless due to temporary or insecure living situations [@hide]. There are several factors contributing to hidden homelessness, extreme scenarios of which can leave a person helpless enough to make use of the system. These circumstances consist of unaffordable housing, disabilities, chronic illness, loss of employment, and discrimination. Many of these factors point to intrinsic problems within society and can compound at a dangerous rate for marginalized communities depending on their social location.
 
-$$
-Pr(\theta | y) = \frac{Pr(y | \theta) Pr(\theta)}{Pr(y)}
-$$ {#eq-bayes}
 
-@eq-bayes seems useful, eh?
 
-Here's a dumb example of how to use some references: In paper we run our analysis in `R` [@citeR]. We also use the `tidyverse` which was written by @thereferencecanbewhatever If we were interested in baseball data then @citeLahman could be useful. 
+Also bills and their average (@tbl-testing). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work.)
 
-We can use maths by including latex between dollar signs, for instance $\theta$.
+## Weaknesses and next steps:
 
-```{r}
-?tibble
-```
+There are limitations with regards to this data set that must be addressed. Firstly, the way that the city of Toronto collects shelter data is very reflective of “point-in-time counts. [@lim]” The problem with this type of data collection is that it lacks context. It is relevant only in that it reflects what the homeless shelter system looks like at any given point in time. They do not fully account for hidden homelessness, and this impacts the numbers reported, especially in women and youth. 
 
-# Results
+Another limitation is in the reporting of Indigenous individuals in the data. There are many columns in which the row belonging to the Indigenous population group simply does not exist. Due to this, in Figure 1, there is no column for Indigenous data. The city of Toronto has not acknowledged this as an issue, and as a result, there is no reason given for why this inconsistency exists. It is not just for the newly identified category that this is a problem, but for all situation data categories. 
 
-# Discussion
+A characteristic of this dataset is that the population group definitions are all extremely general. There is no defined meaning to the category “Non-Refugees”, and whether or not there is room for overlap in the categories “Non-Refugees” and “Single Adult”. There is very little detail given as to the demographic break down of the population groups, they seem situationally narrow and do not give an idea of the identity’s of the people themselves.  
 
-## First discussion point
-
-If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
-
-## Second discussion point
-
-## Third discussion point
-
-## Weaknesses and next steps
-
-Weaknesses and next steps should also be included.
 
 \newpage
 
 \appendix
 
-# Appendix {-}
-
+# Appendix {.unnumbered}
 
 # Additional details
 
-
 \newpage
 
-
 # References
-
-
