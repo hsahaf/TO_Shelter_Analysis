@@ -6,3 +6,6 @@ simulated_shelter_data$population_group|>
 
 simulated_shelter_data$Year|>
   max() == "2022"
+
+simulated_shelter_data$newly_identified|>
+  length() == 5
