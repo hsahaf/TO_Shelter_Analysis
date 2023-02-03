@@ -2,7 +2,7 @@
 title: "Analysis of Toronto Homeless Shelter System:"
 subtitle: "A closer look at hidden homelessness"
 author: "Huda Sahaf"
-thanks: "Code and data are available at:" 
+thanks: "Code and data are available at:https://github.com/hsahaf/TO_Shelter_Analysis.git" 
 date: "`r Sys.time()`"
 date-format: "D MMMM YYYY"
 abstract: "The homeless population in Toronto is rapidly increasing at a rate the homeless shelter system is ill-quipped for. The aim of this investigation to use the city of Toronto’s Shelter Management Information System data to analyze any changes to the number of newly identified homeless people, to take a closer look at the population groups that remain unaccounted for in the data. Understanding how hidden homelessness remains unseen in the data will help make sense of the impact on the future of homeless individuals in Toronto."
