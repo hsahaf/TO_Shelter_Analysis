@@ -4,5 +4,5 @@ simulated_shelter_data$Year|>
 simulated_shelter_data$population_group|>
   length() == 7
 
-simulated_shelter_data|>
+simulated_shelter_data$Year|>
   max() == "2022"

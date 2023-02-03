@@ -5,32 +5,32 @@ author: "Huda Sahaf"
 thanks: "Code and data are available at:" 
 date: "`r Sys.time()`"
 date-format: "D MMMM YYYY"
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: "The homeless population in Toronto is rapidly increasing at a rate the homeless shelter system is ill-quipped for. The aim of this investigation to use the city of Toronto’s Shelter Management Information System data to analyze any changes to the number of newly identified homeless people, to take a closer look at the population groups that remain unaccounted for in the data. Understanding how hidden homelessness remains unseen in the data will help make sense of the impact on the future of homeless individuals in Toronto."
 format: pdf
 bibliography: references.bib
 ---
 
 # Introduction
 
-For people experiencing homelessness in the city of Toronto, there are several options for help, most of which are funded by the government. These services are of many different types: homeless shelters, drop-in programs to access the necessities, 24-hour respites, warming spaces, and programs to get help with housing.Despite these programs, in 2021, there were 18,096 people who were experiencing homelessness in Toronto [@homie]. Homelessness is a serious problem, and unfortunately homeless shelters as well as most of the services that are offered by the city of Toronto are not a sustainable solution. The causes for homelessness are many and these service options do not address them.
+For people experiencing homelessness in the city of Toronto, there are several options for help, many of which are funded by the government. These services are of several different types: homeless shelters, drop-in programs to access necessities, 24-hour respites, warming spaces, and programs to get help with housing. Despite these programs, in 2021, there were 18,096 people who were experiencing homelessness in Toronto [@homie]. Homelessness is a serious problem, and unfortunately homeless shelters as well as most of the services that are offered by the city of Toronto are not a sustainable solution. The root causes for homelessness are many and these service options do not address them.
 
-These services are made up of a network of 53 sites that offer services that are approved by the city of Toronto[@numsites]. Some of these sites are run and managed by the city itself, and others are community sites that are provided for by the city. Shelters offer a possible referral to other community services based on need, counselors to help find permanent housing, and mental and physical health support services. 24-hour respite sites are also similar in that they also offer referrals for other services based on the need of the individual.
+These services are made up of a network of 53 sites that offer services approved by the city of Toronto[@numsites]. Some of these sites are run and managed by the city itself, and others are community sites that are provided for by the city. Shelters offer a possible referral to other community services based on need, counselors to help find permanent housing, and mental and physical health support services. 24-hour respite sites are also similar in that they also offer referrals for other services based on the need of the individual.
 
- But every single one of the services and sites in the network must meet the Shelter and Respite Site Standards set by the government of Toronto. The use of the homeless help services are monitored by the government of Toronto using the Shelter Management Information System (SMIS).
- 
- The Shelter Management Information System is meant to streamline the process of finding information about shelters in the city of Toronto. It is required for all shelter staff to be trained in the use of SMIS[@smis]. Through SMIS, the city of Toronto is able to regularly monitor the conditions of the shelters, whether it be the number of available beds in a shelter or finding the number of newly identified homeless individuals in the last month across the network of shelters in the city. All information that is entered by an individual shelter or respite site is made available on the City of Toronto servers and must meet the requirements of the city.
- 
- To conduct the analysis on the city of Toronto’s homeless shelter system data, R [@citeR] will be used. The data set itself was downloaded from `opendatatoronto` [@odt]. The packages `tidyverse` [@tidyv], `dplyr` [@dan], and `janitor` [@janice] will be used to read in, clean and manipulate the data. Any graphs and tables displayed were created using `ggplot2` [@greg], `knitr` [@nat], `kableExtra` [@konrad], and coloring options were made possible using the `RColorBrewer` [@ryan] package.
- 
+But every single one of the services and sites in the network must meet the Shelter and Respite Site Standards set by the government of Toronto. The use of the homeless help services are monitored by the government of Toronto using the Shelter Management Information System (SMIS).
+
+The Shelter Management Information System is meant to streamline the process of finding information about shelters in the city of Toronto. It is required for all shelter staff to be trained in the use of SMIS[@smis]. Through SMIS, the city of Toronto is able to regularly monitor the conditions of the shelters, whether it be the number of available beds in a shelter or finding the number of newly identified homeless individuals in the last month across the network of shelters in the city. All information that is entered by an individual shelter or respite site is made available on the City of Toronto servers and must meet the requirements of the city.
+
+To conduct the analysis on the city of Toronto's homeless shelter system data, R [@citeR] will be used. The data set itself was downloaded from `opendatatoronto` [@odt]. The packages `tidyverse` [@tidyv], `dplyr` [@dan], and `janitor` [@janice] will be used to read in, clean and manipulate the data. Any graphs and tables displayed were created using `ggplot2` [@greg], `knitr` [@nat], `kableExtra` [@konrad], and coloring options were made possible using the `RColorBrewer` [@ryan] package.
+
 # Data
 
-The primary data set used to conduct the analysis was found on opendatatoronto [@odt].  There are some shelters and respite sites that operate isolated from the city of Toronto and others that have not yet begun using the Shelter Management Information System, and therefore these two categories of homelessness help services are not included in this data set. There are many categories of information available within it. The data is broken down into group demographics and there is data on each group, spanning backwards to the last five years. These groups include the following: 
+The primary data set used to conduct the analysis was found on opendatatoronto [@odt]. There are some shelters and respite sites that operate isolated from the city of Toronto and others that have not yet begun using the Shelter Management Information System, and therefore these two categories of homelessness help services are not included in this data set. There are many categories of information available within it. The data is broken down into group demographics and there is data on each group, spanning backwards to the last five years. These groups include the following:
 
 **All populations**: This is a summative category, referring to the total of the following five categories
 
-**Chronic:** This category refers to people who are experiencing chronic homelessness. More specifically, chronic homelessness is defined as someone who has been reported to have 180 overnight stays in any or multiple of the homeless service facilities in the last year, or, in the past five years, the person has a total number of reported stays of 546 nights.
+**Chronic:** This category refers to people who are experiencing chronic homelessness, which is defined as people who have been reported to have 180 overnight stays in any or multiple of the homeless service facilities in the last year.
 
-**Families:** These are reported individuals who are staying at overnight facilities appointed by their families
+**Families:** These are reported individuals who are staying at overnight facilities appointed by their families.
 
 **Youth:** Unaccompanied youth who are between the ages of 16-24.
 
@@ -42,9 +42,9 @@ The primary data set used to conduct the analysis was found on opendatatoronto [
 
 **Indigenous:** A person who identifies as First Nations, Metis, or Inuit.
 
-Alongside these population groups there are also categories of situational data within this dataset. 
+Alongside these population groups there are also categories of situational data within this dataset.
 
-**Actively Homeless:** These are people who have made use of the shelter system at least once in the past three months and did not end up moving to permanent housing. 
+**Actively Homeless:** These are people who have made use of the shelter system at least once in the past three months and did not end up moving to permanent housing.
 
 **Became Inactive:** People who were reported to have been using the shelter system but have not been documented using the system consistently for a period of at least three months.
 
@@ -52,20 +52,14 @@ Alongside these population groups there are also categories of situational data 
 
 **Newly Identified:** People who were documented for use of the shelter system for the very first time.
 
-**Returned to Shelter:** Individuals who became inactive from using the homeless shelter system in Toronto and are reported to have recently returned.  
+**Returned to Shelter:** Individuals who became inactive from using the homeless shelter system in Toronto and are reported to have recently returned.
 
-**Returned from Housing:** People who were reported to have found and moved to permanent housing options but have now come back to use at least one of the overnight services within the system. 
-
-There are also age breakdowns, gender demographics and population percentage available within this data set.
+**Returned from Housing:** People who were reported to have found and moved to permanent housing options but have now come back to use at least one of the overnight services within the system.
 
 # Discussion
+The purpose of the data is to provide a holistic view of the homeless shelter system in the city of Toronto. This data set specifically documents the flow of people in the homeless shelter system due to the fact that people are constantly coming in and out of the system. There are many different types of services, and as such SMIS reflects the entry and exit of an individual in the system on a monthly basis.
 
-The purpose of the data is to provide a holistic view of the homeless shelter system in the city of Toronto. This data set specifically documents the flow of people in the homeless shelter system due to the fact that people are constantly coming in and out of the system. There are many different types of services, and as such SMIS reflects the entry and exit of an individual in the system on a monthly basis. 
-
-According to the city of Toronto, this data is used to help measure progress towards one of the goals of the government: to make sure that homelessness in this city becomes “rare, brief, and non-recurring [@rare].” There are also different types of services that individuals often move between, which is why the numbers in the Shelter Management Information System data are reported to be higher.
-
-In order to gain a better understanding of the newly identified homeless individuals per population group, the all-populations category was filtered out of the data set, so that the total would not skew the distribution. (@fig-new_id_20) shows the mean number of newly identified homeless people based on population group in 2020. (@fig-new_id_22) is a graph representative of the mean number of newly identified homeless people based on population group in 2022. As represented on both graphs, all population groups have not changed drastically across both years. The non-refugees category in both graphs remain highest in terms of the number of newly identified homeless people. 
- 
+According to the city of Toronto, this data is used to help measure progress towards one of the goals of the government: to make sure that homelessness in this city becomes "rare, brief, and non-recurring [@rare]." There are also different types of services that individuals often move between, which is why the numbers in the Shelter Management Information System data are reported to be higher.
 
 ```{r}
 #| echo: false
@@ -86,7 +80,7 @@ library(RColorBrewer)
 ###Read in Data####
 raw_shelter_data<-
   read_csv(
-    file = 
+    file =
       "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/ac77f532-f18b-427c-905c-4ae87ce69c93/resource/237d5eff-ba47-46c4-8717-a92a802abdf7/download/toronto-shelter-system-flow.csv",
     show_col_types = FALSE
   )
@@ -208,9 +202,28 @@ newly_identified_22 <- cleaned_shelter_data|>
 ```
 
 ```{r}
-all_newly_id <- 
-  all_newly_id |>
+#| echo: false
+#| include: false
+# 2018
+all_newly_id <- newly_identified_18 |>
   left_join(newly_identified_18)
+
+# 2020
+all_newly_id <- all_newly_id|>
+   left_join(newly_identified_20)
+# 2022
+all_newly_id <- all_newly_id|>
+  left_join(newly_identified_22)
+```
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+#| tbl-cap: "Mean Number of Newly Identified Homeless People per Year."
+#| label: tbl-new
+all_newly_id|>
+  knitr::kable()
 ```
 
 ```{r}
@@ -254,32 +267,34 @@ labs(
 
 ```{r}
 #| echo: false
-#| include: false
-#| label: active_homeless_22
-#| fig-cap: Actively Homeless People 2022
+#| label: fig-active_homeless
+#| fig-cap: Total Actively Homeless People 2018-2022
+
+cleaned_shelter_data$Month <- factor(cleaned_shelter_data$Month, levels = c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"))
+
 cleaned_shelter_data|>
   select(population_group, Year, Month, actively_homeless)|>
-  filter(population_group == "All Population")|>
+  filter(population_group == "All Population") |>
   group_by(Year)|>
-  ggplot(mapping = aes(x = Month, y = actively_homeless, fill = Year, label = actively_homeless)) + 
+  ggplot(mapping = aes(x = Month, y = actively_homeless, fill = Year, label = actively_homeless)) +
   geom_bar(stat = "identity") +
   theme_light() +
-  geom_text(size = 2, position = position_stack(vjust = 0.6)) +
+  geom_text(size = 2, position = position_stack(vjust = 0.5)) +
   labs(
     title = "Number of Actively Homeless Individuals by Month",
-    x = "Month",
+    x = "Month", 
     y = "Number of Actively Homeless"
-  )
+  ) +
+  scale_fill_brewer("Set3")
+  
 ```
 
 ```{r}
 #| message: false
 #| warning: false
 #| echo: false
-#| tbl-cap: "wow bro."
+#| tbl-cap: "Mean Number of Homeless People per Year."
 #| label: tbl-testing 
-#| fig-width: 8
-#| fig-height: 4
 #Actively Homeless Table
 cleaned_shelter_data|>
   select(population_group, Year, actively_homeless)|>
@@ -289,31 +304,23 @@ cleaned_shelter_data|>
   knitr::kable()
 ```
 
-
-
+In order to gain a better understanding of the newly identified homeless individuals per population group, the all-populations category was filtered out of the data set, so that the total would not skew the distribution. (@fig-new_id_20) shows the mean number of newly identified homeless people based on population group in 2020. (@fig-new_id_22) is a graph representative of the mean number of newly identified homeless people based on population group in 2022. As represented on both graphs, all population groups have not changed drastically across both years. The non-refugees category in both graphs remain highest in terms of the number of newly identified homeless people.
 
 What is interesting about the non-refugees population group is that it is situationally the most general of the categories defined by the city of Toronto. Yet it points to a systemic failure, an insecurity in living accommodations that results in more and more people needing the homeless shelter system over time. This is a common but worrisome phenomenon in the city of Toronto. The Canadian Observatory on Homelessness (COH) defines hidden homelessness as a type of situational homeless due to temporary or insecure living situations [@hide]. There are several factors contributing to hidden homelessness, extreme scenarios of which can leave a person helpless enough to make use of the system. These circumstances consist of unaffordable housing, disabilities, chronic illness, loss of employment, and discrimination. Many of these factors point to intrinsic problems within society and can compound at a dangerous rate for marginalized communities depending on their social location.
 
+While the categorization of the population groups may not tell us much in terms of specific groups that are at risk of being homeless, the total numbers are not fluctuating drastically over time. (@tbl-testing) is a table of the mean number of actively homeless people, over the past five years. (@tbl-new) is The numbers decreased in 2019 and 2020 but are now back up to what the number was in 2019. [@fig-active_homeless] graphs the number of total actively homeless people in all population categories by month over the course of five years. As shown in [@fig-active_homeless], December is the month in which the total number of actively homeless people rises every year, and it has been the highest in December of last year. However, these reports are not consistent with the reality of thousands of people in Toronto. Increasing rent and inflation has forced many more people on the streets.
 
-
-Also bills and their average (@tbl-testing). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work.)
+It is not reflected in the data surrounding newly identified homeless individuals nor actively homeless people, despite the gravity of the situation. It may be a limitation in the data in that people who are turned away from the shelter system are not included in the reports, but their presence is drastically increasing. According to the Toronto Star, the homeless shelter system within this city is currently unable to support even half of the homeless population, despite the fact that the numbers are rapidly growing. [@star] Getting permanent housing is also a very difficult process since there is a 10-12 year waitlist on social housing. [@star] This means that the lack of correct reporting has an impact that is far reaching. A lack of a reported increase in newly identified homeless individuals results in no changes made by the city of Toronto to improve the social housing system, which means more people will be remaining actively homeless, and none of these people are accounted for in the data.
 
 ## Weaknesses and next steps:
 
-There are limitations with regards to this data set that must be addressed. Firstly, the way that the city of Toronto collects shelter data is very reflective of “point-in-time counts. [@lim]” The problem with this type of data collection is that it lacks context. It is relevant only in that it reflects what the homeless shelter system looks like at any given point in time. They do not fully account for hidden homelessness, and this impacts the numbers reported, especially in women and youth. 
+There are limitations with regards to this data set that must be addressed. Firstly, the way that the city of Toronto collects shelter data is very reflective of "point-in-time counts. [@lim]" The problem with this type of data collection is that it lacks context. It is relevant only in that it reflects what the homeless shelter system looks like at any given point in time. They do not fully account for hidden homelessness, and this impacts the numbers reported, especially in women and youth.
 
-Another limitation is in the reporting of Indigenous individuals in the data. There are many columns in which the row belonging to the Indigenous population group simply does not exist. Due to this, in Figure 1, there is no column for Indigenous data. The city of Toronto has not acknowledged this as an issue, and as a result, there is no reason given for why this inconsistency exists. It is not just for the newly identified category that this is a problem, but for all situation data categories. 
+Another limitation is in the reporting of Indigenous individuals in the data. There are many columns in which the row belonging to the Indigenous population group simply does not exist. Due to this, in Figure 1, there is no column for Indigenous data. The city of Toronto has not acknowledged this as an issue, and as a result, there is no reason given for why this inconsistency exists. It is not just for the newly identified category that this is a problem, but for all situational data categories.
 
-A characteristic of this dataset is that the population group definitions are all extremely general. There is no defined meaning to the category “Non-Refugees”, and whether or not there is room for overlap in the categories “Non-Refugees” and “Single Adult”. There is very little detail given as to the demographic break down of the population groups, they seem situationally narrow and do not give an idea of the identity’s of the people themselves.  
-
+A characteristic of this data set is that the population group definitions are all extremely general. There is no defined meaning to the category "Non-Refugees", and whether or not there is room for overlap in the categories "Non-Refugees" and "Single Adult". There is very little detail given as to the demographic break down of the population groups, they seem situationally narrow and do not give an idea of the identities of the people themselves.
 
 \newpage
-
-\appendix
-
-# Appendix {.unnumbered}
-
-# Additional details
 
 \newpage
 
